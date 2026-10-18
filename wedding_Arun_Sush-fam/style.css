@@ -1,0 +1,265 @@
+/* Wedding Invitation — V54 clean layout (no legacy cascading overrides). */
+*{box-sizing:border-box}
+:root{--card-width:520px;--gap:18px;--bg:#18151d}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);-webkit-text-size-adjust:100%}
+body{font-family:Georgia,"Times New Roman",serif}
+button,a{-webkit-tap-highlight-color:transparent}
+
+/* The invitation is one real scrollable list. Six fixed-ratio cards never collapse.
+   The document itself cannot restore a previous position on mobile. */
+#story{
+  position:fixed;inset:0;z-index:1;display:block;
+  width:100%;height:100vh;height:100dvh;
+  margin:0;padding:12px 0 24px;
+  overflow-x:hidden;overflow-y:hidden;
+  background:var(--bg);
+  overscroll-behavior-y:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+}
+#story.is-open{overflow-y:auto}
+#story>.scene{
+  display:block !important;position:relative !important;
+  width:min(var(--card-width),calc(100vw - 12px)) !important;
+  height:auto !important;min-height:0 !important;
+  aspect-ratio:9/16 !important;
+  margin:0 auto var(--gap) !important;
+  padding:0 !important;
+  border-radius:16px;
+  overflow:hidden !important;isolation:isolate;
+  background:#f6eee4;
+  box-shadow:0 9px 28px rgba(0,0,0,.22);
+}
+#story>.scene:last-child{margin-bottom:0 !important}
+#story>.scene>img.bg{
+  display:block !important;position:absolute !important;
+  inset:0 !important;width:100% !important;height:100% !important;
+  object-fit:fill !important;object-position:center !important;
+  border:0;border-radius:inherit !important;max-height:none !important;
+  filter:none !important;opacity:1 !important;
+  z-index:1;pointer-events:none;
+}
+/* No decorative gold borders or duplicated image/blur layers */
+#story>.scene:before,#story>.scene:after{display:none !important;content:none !important}
+
+/* The invisible link covers ONLY the printed location on the artwork. */
+.venue-hotspot{
+  display:block;position:absolute;z-index:12;
+  background:transparent;border:0;text-decoration:none;cursor:pointer;
+}
+.venue-hotspot:focus-visible{outline:2px solid #f5cf6e;border-radius:6px}
+.haldi-venue{left:34%;top:44.2%;width:36%;height:5.8%}
+.sangeeth-venue{left:18%;top:48%;width:64%;height:5.2%}
+.reception-venue{left:52%;top:25.2%;width:39%;height:8.5%}
+.wedding-venue{left:54%;top:54%;width:34%;height:10%}
+.beegaru-venue-hotspot{left:34%;top:78%;width:32%;height:7.5%}
+
+/* Fall and sparkle effects are aligned to each card's aspect ratio. */
+.petals,.fairy-lights,.music-notes,.sparkles,.garland-sparkle,.wedding-flowers,.dining-lights{
+  position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;
+}
+.haldi-petals span,.wedding-flowers span{
+  position:absolute;top:-7%;left:calc(var(--x)*1%);
+  width:13px;height:20px;transform:rotate(var(--r,0deg)) scale(var(--s,1));
+  border-radius:78% 8% 76% 10%;opacity:0;
+  animation:petalDrift var(--d,6s) linear infinite;
+  animation-delay:var(--delay,0s);
+}
+.haldi-petals span{background:linear-gradient(135deg,#fff3a2,#ffd347 56%,#edaa00)}
+.wedding-flowers span.white{background:linear-gradient(135deg,#fffef5,#fff1c5)}
+.wedding-flowers span.yellow{background:linear-gradient(135deg,#fff2aa,#f6ba2c)}
+@keyframes petalDrift{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(0deg) scale(var(--s,1))}
+  8%{opacity:.72}
+  100%{opacity:0;transform:translate3d(30px,1150px,0) rotate(390deg) scale(var(--s,1))}
+}
+.music-notes span{
+  position:absolute;color:rgba(255,232,177,.92);
+  font:24px Georgia,serif;text-shadow:0 0 8px rgba(245,192,108,.5);
+  animation:floatNote 3.9s ease-in-out infinite;
+}
+@keyframes floatNote{0%,100%{opacity:0;transform:translateY(18px)}30%{opacity:.88}72%{opacity:.7}95%{transform:translateY(-60px)}}
+/* Sangeeth no bulbs; Reception only */
+#sangeeth .fairy-lights{display:none}
+.reception-fairy-lights span,.dining-lights span{
+  position:absolute;top:3%;width:12px;height:12px;
+  border-radius:50%;background:#ffe6a5;
+  box-shadow:0 0 14px #ffdf87,0 0 28px rgba(255,189,70,.55);
+  animation:bulbBlink 1.8s ease-in-out infinite;
+}
+.reception-fairy-lights span:after,.dining-lights span:after{
+  content:"";position:absolute;left:50%;bottom:100%;height:22px;width:1px;background:rgba(255,227,167,.3)
+}
+@keyframes bulbBlink{0%,100%{opacity:.45;transform:scale(.88)}50%{opacity:1;transform:scale(1.1)}}
+.garland-sparkle span{
+  position:absolute;top:11%;height:6px;width:6px;background:#f9db84;border-radius:50%;
+  box-shadow:0 0 10px #f5df8e;animation:bulbBlink 2.5s ease-in-out infinite;
+}
+
+/* Door is the original open-from-middle experience, with one center button. */
+#doorOverlay{
+  position:fixed;inset:0;z-index:50;display:block;
+  width:min(var(--card-width),100vw);height:100vh;height:100dvh;
+  margin:0 auto;left:0;right:0;
+  overflow:hidden;perspective:1400px;background:var(--bg);cursor:pointer;
+  touch-action:none;
+}
+.door-panel{
+  position:absolute;top:0;bottom:0;
+  width:50.1%;height:100%;background-image:url('assets/door.jpg');
+  background-repeat:no-repeat;background-size:200% 100%;
+  will-change:transform;transition:transform 1.35s cubic-bezier(.24,.75,.29,1);
+  backface-visibility:hidden;
+}
+.door-panel.left{left:0;background-position:left center;transform-origin:left center}
+.door-panel.right{right:0;background-position:right center;transform-origin:right center}
+#doorOverlay.open .door-panel.left{transform:translateX(-105%) rotateY(62deg)}
+#doorOverlay.open .door-panel.right{transform:translateX(105%) rotateY(-62deg)}
+#doorOverlay.hide{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
+.open-invite-btn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:9;min-height:48px;min-width:162px;padding:12px 20px;
+  border:1px solid rgba(255,255,255,.85);border-radius:999px;
+  background:linear-gradient(#fff6e9,#eed7a9);color:#704320;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+  text-transform:uppercase;letter-spacing:.12em;
+  font:700 12px system-ui,-apple-system,sans-serif;cursor:pointer;
+}
+#doorOverlay.open .open-invite-btn{opacity:0;transition:opacity .25s}
+.door-flowers{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0}
+#doorOverlay.open .door-flowers{opacity:1}
+.door-flowers span{
+  position:absolute;left:calc(var(--x)*1%);top:-9%;width:12px;height:18px;
+  background:linear-gradient(145deg,#ffe0e7,#f99abb 53%,#cb4b73);
+  border-radius:78% 8% 76% 10%;opacity:0;
+  animation:none;
+}
+#doorOverlay.open .door-flowers span{animation:roseFall var(--d,4s) linear forwards;animation-delay:var(--delay,0s)}
+@keyframes roseFall{
+  0%{transform:translateY(0) rotate(0);opacity:0}
+  12%{opacity:.95}
+  100%{transform:translate(25px,105vh) rotate(450deg);opacity:.15}
+}
+/* Swipe hint only after opening; no overlay interception */
+#scrollTip{
+  position:fixed;z-index:15;left:50%;bottom:max(8px,env(safe-area-inset-bottom));
+  transform:translateX(-50%);pointer-events:none;
+  background:rgba(0,0,0,.25);color:#fff;border-radius:100px;
+  padding:7px 13px;white-space:nowrap;
+  font:600 10px system-ui,sans-serif;letter-spacing:.15em;text-transform:uppercase;
+  opacity:0;transition:opacity .4s;
+}
+@media(min-width:650px){
+  #story>.scene{border-radius:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none !important;transition-duration:.01ms !important}
+}
+
+
+/* v55 final update: no door rose petals, no Beegaru lights */
+.door-flowers, .dining-lights { display:none !important; }
+
+
+/* v59: each invitation has baked-in, matching "Click Here" text below its location area.
+   These invisible hotspots make the printed words themselves tappable. */
+.venue-click-here{
+  display:block;position:absolute;z-index:13;
+  text-decoration:none;background:transparent;cursor:pointer;
+  -webkit-tap-highlight-color:rgba(247,210,129,.26);
+}
+.venue-click-here:focus-visible{outline:2px solid #f5cf6e;border-radius:4px}
+.click-haldi {left:36%; top:49.5%; width:28%; height:5.0%;}
+.click-sangeeth {left:12%; top:52.0%; width:23%; height:4.3%;}
+.click-reception {left:62%; top:36.8%; width:26%; height:5.4%;}
+.click-wedding {left:60%; top:63.4%; width:31%; height:6.0%;}
+.click-dining {left:38%; top:89.2%; width:24%; height:5.1%;}
+/* Existing venue hotspots remain clickable for visitors who tap the printed venue name. */
+.wedding-venue{top:60.2%;height:7.1%;}
+.reception-venue{top:25.2%;height:8.5%;}
+
+
+/* v60: precise link areas follow the Haldi-PDF-style italic labels. */
+.haldi-venue{left:38%;top:51.2%;width:34%;height:3.5%;}
+.sangeeth-venue{left:18%;top:48.4%;width:64%;height:3.4%;}
+.reception-venue{left:52%;top:26.8%;width:39%;height:6.1%;}
+.wedding-venue{left:55%;top:60.1%;width:34%;height:4.9%;}
+.beegaru-venue-hotspot{left:31%;top:73.6%;width:38%;height:12%;}
+.click-haldi{left:35%;top:53.0%;width:33%;height:5.0%;}
+.click-sangeeth{left:34%;top:51.9%;width:33%;height:3.9%;}
+.click-reception{left:61%;top:36.2%;width:28%;height:4.2%;}
+.click-wedding{left:60%;top:63.4%;width:29%;height:4.3%;}
+.click-dining{left:35%;top:89.9%;width:30%;height:4.9%;}
+
+
+/* v62: do not expose the opaque doorway backdrop during the opening animation.
+   The first invitation image is already mounted directly underneath. */
+#doorOverlay.open,
+#doorOverlay.hide {
+  background: transparent !important;
+}
+
+
+/* v63: location targets aligned to the user-supplied Haldi and Reception artwork */
+.haldi-venue { left: 37%; top: 43.2%; width: 36%; height: 4.2%; }
+.click-haldi { left: 35%; top: 47.0%; width: 35%; height: 4.0%; }
+.reception-venue { left: 52%; top: 26.0%; width: 41%; height: 5.8%; }
+.click-reception { left: 55%; top: 31.7%; width: 39%; height: 4.4%; }
+
+
+/* v64: Actual clickable zones over the printed Nature Knots venue and location text. */
+#reception .location-tap-area,
+#wedding .location-tap-area {
+  display:block;
+  position:absolute;
+  z-index:30;
+  background:transparent;
+  cursor:pointer;
+  pointer-events:auto;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:rgba(251,214,120,.18);
+}
+#reception .location-tap-area:focus-visible,
+#wedding .location-tap-area:focus-visible {
+  outline:3px solid #ffe09b;
+  outline-offset:-3px;
+  border-radius:8px;
+}
+/* New Reception art: location title and gold click bar near upper right. */
+#reception .reception-location-tap {
+  left:52%; top:25%; width:43%; height:11.5%;
+}
+/* Wedding art: Nature Knots and underlined Click Here near center right. */
+#wedding .wedding-location-tap {
+  left:54%; top:59.2%; width:39%; height:9%;
+}
+
+
+/* v66: match the ACTUAL printed location text in the supplied wedding image.
+   The previous hotspot started at y=59.2%, below the printed y=54–56% words. */
+#wedding .wedding-location-tap {
+  left: 56% !important;
+  top: 48.5% !important;
+  width: 37% !important;
+  height: 9.8% !important;
+  z-index: 45 !important;
+  display: block !important;
+  position: absolute !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+}
+
+/* v67: discreet guest-controlled music button after opening. */
+.music-toggle{
+  position:fixed;z-index:25;
+  top:max(12px, env(safe-area-inset-top));
+  right:max(12px, calc((100vw - min(520px, 100vw))/2 + 12px));
+  width:44px;height:44px;padding:0;
+  border:1px solid rgba(255,237,205,.45);border-radius:50%;
+  background:rgba(27,20,31,.66);box-shadow:0 4px 16px rgba(0,0,0,.2);
+  color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.music-toggle[hidden]{display:none !important;}
+.music-toggle:focus-visible{outline:2px solid #f4cd8a;outline-offset:2px;}

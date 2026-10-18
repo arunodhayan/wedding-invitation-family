@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#120f16" />
+  <title>Wedding Invitation</title>
+  <link rel="preload" href="assets/main.jpg?v=63" as="image" fetchpriority="high" />
+  <link rel="stylesheet" href="style.css?v=67-music" />
+</head>
+<body>
+  <div class="door-overlay" id="doorOverlay" aria-label="Open invitation">
+    <div class="door-panel left"></div>
+    <div class="door-panel right"></div>
+    <button class="open-invite-btn" id="openInviteBtn" type="button">Open Invitation</button>
+  </div>
+
+  <!-- Audio starts with the user gesture on Open Invitation. -->
+  <audio id="weddingMusic" src="audio/wedding-song.mp3" preload="auto" loop></audio>
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="Pause music" title="Pause music" hidden>🔊</button>
+
+  <div class="scroll-tip" id="scrollTip">Swipe up</div>
+
+  <main class="story" id="story">
+    <section class="scene" id="main-scene">
+      <img src="assets/main.jpg?v=63" alt="Main invitation" class="bg contain-top" loading="eager" decoding="sync" fetchpriority="high" />
+    </section>
+
+    
+
+    
+    
+    
+
+    <section class="scene location-scene" id="reception" data-link="https://maps.app.goo.gl/7RafZ6vhFmiamHB5A">
+      <img src="assets/reception.jpg?v=64" alt="Reception invitation" class="bg" />
+      <div class="fairy-lights reception-fairy-lights" aria-hidden="true">
+        <span style="left:5%;animation-delay:0.0s"></span>
+        <span style="left:14%;animation-delay:0.18s"></span>
+        <span style="left:23%;animation-delay:0.36s"></span>
+        <span style="left:32%;animation-delay:0.54s"></span>
+        <span style="left:41%;animation-delay:0.72s"></span>
+        <span style="left:50%;animation-delay:0.90s"></span>
+        <span style="left:59%;animation-delay:1.08s"></span>
+        <span style="left:68%;animation-delay:1.26s"></span>
+        <span style="left:77%;animation-delay:1.44s"></span>
+        <span style="left:86%;animation-delay:1.62s"></span>
+      </div>
+    
+      <a class="location-tap-area reception-location-tap" href="https://maps.app.goo.gl/7RafZ6vhFmiamHB5A" target="_blank" rel="noopener noreferrer" aria-label="Open Nature Knots in Google Maps for Reception" title="Open Nature Knots location on Google Maps"></a>
+    </section>
+
+    <section class="scene location-scene" id="wedding" data-link="https://maps.app.goo.gl/7RafZ6vhFmiamHB5A">
+      <img src="assets/wedding-final.png?v=66-wedding-link" alt="Wedding invitation" class="bg contain-top" />
+      <div class="garland-sparkle" aria-hidden="true">
+        <span style="left:8%;animation-delay:0.0s"></span><span style="left:18%;animation-delay:0.45s"></span><span style="left:28%;animation-delay:0.9s"></span><span style="left:38%;animation-delay:1.35s"></span><span style="left:48%;animation-delay:1.8s"></span><span style="left:58%;animation-delay:0.0s"></span><span style="left:68%;animation-delay:0.45s"></span><span style="left:78%;animation-delay:0.9s"></span><span style="left:88%;animation-delay:1.35s"></span>
+      </div>
+    
+      <a class="location-tap-area wedding-location-tap" href="https://maps.app.goo.gl/7RafZ6vhFmiamHB5A" aria-label="Open Nature Knots in Google Maps for the Wedding" title="Click here to open Wedding location on Google Maps"></a>
+    </section>
+
+    
+
+<section class="scene location-scene" id="dining" data-link="https://share.google/771Np0IxNXsMEHuXs">
+      <img src="assets/beegaru.png" alt="Beegaru Oota invitation" class="bg contain-top" />
+      <a class="venue-hotspot beegaru-venue-hotspot" href="https://share.google/771Np0IxNXsMEHuXs" target="_blank" rel="noopener" aria-label="Open Beegaru Oota venue in Google Maps"></a>
+      <a class="venue-click-here click-dining" href="https://share.google/771Np0IxNXsMEHuXs" target="_blank" rel="noopener noreferrer" aria-label="Click Here for Beegaru Oota location on Google Maps"></a>
+    </section>
+  </main>
+
+  <script src="script.js?v=67-music"></script>
+</body>
+</html>
